@@ -1,12 +1,13 @@
 package com.adela.domain;
 
 import jakarta.persistence.Embeddable;
-import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@NoArgsConstructor
 public class CommentGoodId implements Serializable {
     private Long commentId;
     private String userId;
