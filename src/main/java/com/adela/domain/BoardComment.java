@@ -14,12 +14,16 @@ import java.time.LocalDate;
 public class BoardComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="commnet_id", nullable = false)
+    @Column(name="comment_id", nullable = false)
     private Long commentId;
 
     @ManyToOne(fetch = FetchType.LAZY) //나중에 확인
     @JoinColumn(name="board_id", nullable=false)
     private Article article;
+
+    @ManyToOne(fetch = FetchType.LAZY) //나중에 확인
+    @JoinColumn(name="user_id", nullable=false)
+    private UserEntity userEntity;
 
     @Column(name = "content", nullable = false)
     private String comment;
@@ -34,9 +38,10 @@ public class BoardComment {
     private LocalDate updateDate;
 
     @Builder
-    public BoardComment(String comment, Article article, String codeComment, LocalDate regDate, LocalDate updateDate) {
+    public BoardComment(String comment, Article article, UserEntity userEntity, String codeComment, LocalDate regDate, LocalDate updateDate) {
         this.comment = comment;
         this.article = article;
+        this.userEntity = userEntity;
         this.codeComment = codeComment;
         this.regDate = regDate;
         this.updateDate = updateDate;
