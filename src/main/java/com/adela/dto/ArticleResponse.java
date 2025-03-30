@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Getter
 public class ArticleResponse {
     private final Long boardId;
-    private final Long categoryId;
     private final String userId;
     private final String title;
     private final String content;
@@ -20,7 +19,6 @@ public class ArticleResponse {
 
     public ArticleResponse(Article article){
         this.boardId = article.getBoardId();
-        this.categoryId = article.getCategoryId();
         this.userId = article.getUserEntity().getUserId();
         this.title = article.getTitle();
         this.content = article.getContent();

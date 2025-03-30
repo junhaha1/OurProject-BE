@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class AddArticleRequest {
-    private Long categoryId;
     private UserEntity userEntity;
     private String title;
     private String content;
@@ -27,7 +26,6 @@ public class AddArticleRequest {
 
     public Article toEntity(){
         return Article.builder()
-                .categoryId(categoryId)
                 .userEntity(userEntity)
                 .title(title)
                 .content(content)
