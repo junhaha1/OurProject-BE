@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "boardcomment")
 public class BoardComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +21,10 @@ public class BoardComment {
     @JoinColumn(name="board_id", nullable=false)
     private Article article;
 
-    @Column(name = "comment", nullable = false)
+    @Column(name = "content", nullable = false)
     private String comment;
 
-    @Column(name = "code_comment")
+    @Column(name = "code_content")
     private String codeComment;
 
     @Column(name = "reg_date")
