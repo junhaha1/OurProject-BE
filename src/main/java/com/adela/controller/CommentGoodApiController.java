@@ -1,11 +1,9 @@
 package com.adela.controller;
 
 import com.adela.dto.AddCommentGoodRequest;
-import com.adela.dto.AddGoodRequest;
 import com.adela.service.CommentGoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("board/comment")
@@ -20,9 +18,9 @@ public class CommentGoodApiController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/removegood/{articleId}/{userId}")
-    public ResponseEntity<String> commentRemove(@PathVariable Long articleId, @PathVariable String userId){
-        commentGoodService.commentRemove(articleId, userId);
+    @DeleteMapping("/removegood/{commentId}/{userId}")
+    public ResponseEntity<String> commentRemove(@PathVariable Long commentId, @PathVariable String userId){
+        commentGoodService.commentRemove(commentId, userId);
         return ResponseEntity.ok().build();
     }
 }
