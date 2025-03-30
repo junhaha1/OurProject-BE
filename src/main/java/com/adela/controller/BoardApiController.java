@@ -2,6 +2,7 @@ package com.adela.controller;
 
 import com.adela.domain.Article;
 import com.adela.domain.BoardComment;
+import com.adela.domain.UserEntity;
 import com.adela.dto.*;
 import com.adela.service.BoardService;
 import com.adela.service.CommentService;
@@ -75,9 +76,14 @@ public class BoardApiController {
 
     //댓글 기능
     //댓글 추가
-    @PostMapping("/board/comment/{articleId}")
-    public ResponseEntity<BoardComment> addComment(@PathVariable("articleId") long id, @RequestBody AddCommnetRequest request) {
-        request.connectionArticle(boardService.findById(id));
+    @PostMapping("/board/comment/{articleId}/{userId}")
+    public ResponseEntity<BoardComment> addComment(@PathVariable Long articleId, @PathVariable String userId, @RequestBody AddCommnetRequest request) {
+        request.connectionArticle(boardService.findById(articleId));
+        UserEntity user = userService.findById(userId);
+        if (user == null) {
+            throw new RuntimeException("유저가 존재하지 않음: " + userId);
+        }
+        request.connectionUserEntity(user);
         BoardComment savedComment = commentService.save(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
