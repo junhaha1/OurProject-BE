@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @IdClass(ArticleGoodId.class) // 복합 키 설정
+@Table(name = "boardgood")
 public class ArticleGood {
 
     @Id
