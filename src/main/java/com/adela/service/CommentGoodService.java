@@ -27,8 +27,8 @@ public class CommentGoodService {
         commentGoodRepository.save(request.toEntity(boardComment, userEntity));
     }
 
-    public void commentRemove(Long articleId, String userId){
-        CommentGoodId commentGoodId = new CommentGoodId(articleId, userId);
+    public void commentRemove(Long commentId, String userId){
+        CommentGoodId commentGoodId = new CommentGoodId(commentId, userId);
         if (!commentGoodRepository.existsById(commentGoodId)) {
             throw new IllegalStateException("해당 댓글엔 좋아요 정보가 존재하지 않습니다.");
         }
