@@ -11,14 +11,12 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "board")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id", updatable = false)
     private Long boardId;
-
-    @Column(name = "ct_id", nullable = false)
-    private Long categoryId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -43,8 +41,7 @@ public class Article {
     private LocalDate updateDate;
 
     @Builder
-    public Article(Long categoryId, UserEntity userEntity, String title, String content, String codeContent, String errorContent, LocalDate regDate){
-        this.categoryId = categoryId;
+    public Article(UserEntity userEntity, String title, String content, String codeContent, String errorContent, LocalDate regDate){
         this.userEntity = userEntity;
         this.title = title;
         this.content = content;
