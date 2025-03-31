@@ -4,7 +4,7 @@ import com.adela.domain.Article;
 import com.adela.domain.ArticleGood;
 import com.adela.domain.ArticleGoodId;
 import com.adela.domain.UserEntity;
-import com.adela.dto.AddGoodRequest;
+import com.adela.dto.article.AddGoodRequest;
 import com.adela.repository.BoardRepository;
 import com.adela.repository.GoodRepository;
 import com.adela.repository.UserRepository;

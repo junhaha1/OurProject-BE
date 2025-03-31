@@ -1,8 +1,8 @@
 package com.adela.service;
 
 import com.adela.domain.Article;
-import com.adela.dto.AddArticleRequest;
-import com.adela.dto.UpdateArticleRequest;
+import com.adela.dto.article.AddArticleRequest;
+import com.adela.dto.article.UpdateArticleRequest;
 import com.adela.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

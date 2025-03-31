@@ -3,7 +3,7 @@ package com.adela.service;
 import com.adela.domain.BoardComment;
 import com.adela.domain.CommentGoodId;
 import com.adela.domain.UserEntity;
-import com.adela.dto.AddCommentGoodRequest;
+import com.adela.dto.comment.AddCommentGoodRequest;
 import com.adela.repository.CommentGoodRepository;
 import com.adela.repository.CommentRepository;
 import com.adela.repository.UserRepository;

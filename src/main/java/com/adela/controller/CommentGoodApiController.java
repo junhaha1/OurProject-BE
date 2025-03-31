@@ -1,6 +1,6 @@
 package com.adela.controller;
 
-import com.adela.dto.AddCommentGoodRequest;
+import com.adela.dto.comment.AddCommentGoodRequest;
 import com.adela.service.CommentGoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
