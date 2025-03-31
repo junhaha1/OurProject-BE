@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class AddArticleRequest {
     private UserEntity userEntity;
     private String title;
+    private int ctId;
     private String content;
     private String codeContent;
     private String errorContent;
@@ -23,11 +24,11 @@ public class AddArticleRequest {
         this.userEntity = userEntity;
     }
 
-
     public Article toEntity(){
         return Article.builder()
                 .userEntity(userEntity)
                 .title(title)
+                .ctId(ctId)
                 .content(content)
                 .codeContent(codeContent)
                 .errorContent(errorContent)

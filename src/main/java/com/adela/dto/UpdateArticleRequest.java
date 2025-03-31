@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class UpdateArticleRequest {
     private String title;
     private String content;
+    private int ctId;
     private String codeContent;
     private String errorContent;
 }

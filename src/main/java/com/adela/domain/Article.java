@@ -22,6 +22,9 @@ public class Article {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userEntity;
 
+    @Column(name = "ct_id")
+    private int ctId;
+
     @Column(name = "title", nullable = false)
     private String title;
 
@@ -41,9 +44,10 @@ public class Article {
     private LocalDate updateDate;
 
     @Builder
-    public Article(UserEntity userEntity, String title, String content, String codeContent, String errorContent, LocalDate regDate){
+    public Article(UserEntity userEntity, String title, int ctId, String content, String codeContent, String errorContent, LocalDate regDate){
         this.userEntity = userEntity;
         this.title = title;
+        this.ctId = ctId;
         this.content = content;
         this.codeContent = codeContent;
         this.errorContent = errorContent;
@@ -61,8 +65,9 @@ public class Article {
             this.updateDate = date;
         }
     }
-    public void update(String title, String content, String codeContent, String errorContent, LocalDate updateDate){
+    public void update(String title, int ctId, String content, String codeContent, String errorContent, LocalDate updateDate){
         this.title = title;
+        this.ctId = ctId;
         this.content = content;
         this.codeContent = codeContent;
         this.errorContent = errorContent;

@@ -11,6 +11,7 @@ public class ArticleResponse {
     private final Long boardId;
     private final String userId;
     private final String title;
+    private final int ctId;
     private final String content;
     private final String codeContent;
     private final String errorContent;
@@ -21,6 +22,7 @@ public class ArticleResponse {
         this.boardId = article.getBoardId();
         this.userId = article.getUserEntity().getUserId();
         this.title = article.getTitle();
+        this.ctId = article.getCtId();
         this.content = article.getContent();
         this.codeContent = article.getCodeContent();
         this.errorContent = article.getErrorContent();
