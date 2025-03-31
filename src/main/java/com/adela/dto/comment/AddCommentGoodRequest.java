@@ -1,4 +1,4 @@
-package com.adela.dto;
+package com.adela.dto.comment;
 
 import com.adela.domain.BoardComment;
 import com.adela.domain.CommentGood;

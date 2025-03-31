@@ -1,4 +1,4 @@
-package com.adela.dto;
+package com.adela.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class UpdateUserRequest {
-    private String name;
-    private String pwd;
+public class UpdateCommentRequest {
+    private String comment;
+    private String codeComment;
 }

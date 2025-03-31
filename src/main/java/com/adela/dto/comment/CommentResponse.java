@@ -1,7 +1,6 @@
-package com.adela.dto;
+package com.adela.dto.comment;
 
 import com.adela.domain.BoardComment;
-import jakarta.persistence.Column;
 import lombok.Getter;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.adela.dto;
+package com.adela.dto.article;
 
 import com.adela.domain.Article;
 import com.adela.domain.UserEntity;

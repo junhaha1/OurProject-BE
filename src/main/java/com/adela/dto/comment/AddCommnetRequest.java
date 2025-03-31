@@ -1,9 +1,8 @@
-package com.adela.dto;
+package com.adela.dto.comment;
 
 import com.adela.domain.Article;
 import com.adela.domain.BoardComment;
 import com.adela.domain.UserEntity;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
