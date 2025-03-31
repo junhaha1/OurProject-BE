@@ -1,10 +1,8 @@
 package com.adela.service;
 
-import com.adela.domain.Article;
 import com.adela.domain.BoardComment;
-import com.adela.dto.AddCommnetRequest;
-import com.adela.dto.UpdateArticleRequest;
-import com.adela.dto.UpdateCommentRequest;
+import com.adela.dto.comment.AddCommnetRequest;
+import com.adela.dto.comment.UpdateCommentRequest;
 import com.adela.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

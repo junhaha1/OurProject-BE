@@ -1,7 +1,7 @@
 package com.adela.controller;
 
 import com.adela.domain.ArticleGood;
-import com.adela.dto.AddGoodRequest;
+import com.adela.dto.article.AddGoodRequest;
 import com.adela.service.GoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class GoodApiController {
                 .body(savedArticleGood);
     }
 
-    @DeleteMapping("/good/{userId}/{boardId}")
+    @DeleteMapping("/good/{boardId}/{userId}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("userId") String userId, @PathVariable("boardId") Long boardId){
         goodService.delete(userId, boardId);
         return ResponseEntity.ok()

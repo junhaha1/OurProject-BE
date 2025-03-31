@@ -1,4 +1,4 @@
-package com.adela.dto;
+package com.adela.dto.user;
 
 import com.adela.domain.UserEntity;
 import lombok.Getter;

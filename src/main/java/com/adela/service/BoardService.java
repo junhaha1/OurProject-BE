@@ -1,8 +1,8 @@
 package com.adela.service;
 
 import com.adela.domain.Article;
-import com.adela.dto.AddArticleRequest;
-import com.adela.dto.UpdateArticleRequest;
+import com.adela.dto.article.AddArticleRequest;
+import com.adela.dto.article.UpdateArticleRequest;
 import com.adela.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class BoardService {
         Article article = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
-        article.update(request.getTitle(), request.getContent(), request.getCodeContent(), request.getErrorContent(), LocalDate.now());
+        article.update(request.getTitle(), request.getCtId(), request.getContent(), request.getCodeContent(), request.getErrorContent(), LocalDate.now());
 
         return article;
     }

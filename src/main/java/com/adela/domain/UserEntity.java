@@ -3,6 +3,7 @@ package com.adela.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "userentity")
 public class UserEntity {
 
     //email
@@ -29,7 +31,7 @@ public class UserEntity {
     @Column(name = "reg_date")
     private LocalDate regDate;
 
-    @Column(name = "delete_date")
+    @Column(name = "del_date")
     private LocalDate deleteDate;
 
     @Builder

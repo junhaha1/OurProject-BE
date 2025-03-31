@@ -1,10 +1,8 @@
-package com.adela.dto;
+package com.adela.dto.article;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,6 +10,7 @@ import java.time.LocalDate;
 public class UpdateArticleRequest {
     private String title;
     private String content;
+    private int ctId;
     private String codeContent;
     private String errorContent;
 }
