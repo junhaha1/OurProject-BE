@@ -3,6 +3,7 @@ package com.adela.service;
 import com.adela.domain.Article;
 import com.adela.dto.article.AddArticleRequest;
 import com.adela.dto.article.UpdateArticleRequest;
+import com.adela.repository.ArticleGoodRepository;
 import com.adela.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,18 @@ import java.util.List;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+
     public Article save(AddArticleRequest request){
         return boardRepository.save(request.toEntity());
     }
 
+    private final ArticleGoodRepository articleGoodRepository;
+
+    public int getLikeCount(Article article) { // ✅ Article 객체를 직접 받음
+        return articleGoodRepository.countByBoardId(article);
+    }
+
+    //전체 조회
     public List<Article> findAll () {
         return boardRepository.findAll();
     }

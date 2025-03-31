@@ -44,21 +44,37 @@ public class BoardApiController {
 
     @GetMapping("/article/list")
     public ResponseEntity<List<ArticleResponse>> findAllArticles() {
+//        List<ArticleResponse> articles = boardService.findAll()
+//                .stream()
+//                .map(ArticleResponse::new)
+//                .toList();
+
         List<ArticleResponse> articles = boardService.findAll()
                 .stream()
-                .map(ArticleResponse::new)
+                .map(article -> new ArticleResponse(article, boardService.getLikeCount(article)))
                 .toList();
+
         return ResponseEntity.ok().body(articles);
     }
+
+//    @GetMapping("/article/list/{articleId}")
+//    public ResponseEntity<ArticleResponse> findArticle(@PathVariable("articleId") long id){
+//        Article article = boardService.findById(id);
+//        int likeCount = boardService.getLikeCount(article.getBoardId());
+//        //count = 서비스 이용해서 게시글 좋아요 갯수 계산
+//        //viewArticle.set(count)
+//
+//        return ResponseEntity.ok()
+//                .body(new ArticleResponse(article, likeCount));
+//    }
 
     @GetMapping("/article/list/{articleId}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable("articleId") long id){
         Article article = boardService.findById(id);
-        //count = 서비스 이용해서 게시글 좋아요 갯수 계산
-        //viewArticle.set(count)
-        return ResponseEntity.ok()
-                .body(new ArticleResponse(article));
+        int likeCount = boardService.getLikeCount(article);
+        return ResponseEntity.ok().body(new ArticleResponse(article, likeCount));
     }
+
 
     @DeleteMapping("/article/{articleId}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("articleId") long id){
