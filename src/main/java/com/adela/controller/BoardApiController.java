@@ -9,6 +9,7 @@ import com.adela.dto.comment.AddCommnetRequest;
 import com.adela.dto.comment.CommentResponse;
 import com.adela.dto.comment.UpdateCommentRequest;
 import com.adela.service.BoardService;
+import com.adela.service.CommentGoodService;
 import com.adela.service.CommentService;
 import com.adela.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class BoardApiController {
     private final BoardService boardService;
     private final CommentService commentService;
     private final UserService userService;
+    private final CommentGoodService commentGoodService;
 
     @PostMapping("/article/{userId}")
     public ResponseEntity<Article> addArticle(@PathVariable String userId, @RequestBody AddArticleRequest request) {
@@ -105,7 +107,7 @@ public class BoardApiController {
     public ResponseEntity<List<CommentResponse>> findByBoardIdComments(@PathVariable("boardId") long boardId) {
         List<CommentResponse> comments = commentService.findByBoardId(boardId)
                 .stream()
-                .map(CommentResponse::new)
+                .map(comment -> new CommentResponse(comment, commentGoodService.goodCount(comment.getCommentId())))
                 .toList();
         return ResponseEntity.ok().body(comments);
     }
