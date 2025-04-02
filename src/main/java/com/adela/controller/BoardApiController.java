@@ -103,7 +103,7 @@ public class BoardApiController {
     }
 
     //댓글 조회
-    @GetMapping("/comment/list/{boardId}")
+    @GetMapping("/comment/list/{articleId}")
     public ResponseEntity<List<CommentResponse>> findByBoardIdComments(@PathVariable("boardId") long boardId) {
         List<CommentResponse> comments = commentService.findByBoardId(boardId)
                 .stream()

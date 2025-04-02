@@ -21,7 +21,7 @@ public class GoodApiController {
                 .body(savedArticleGood);
     }
 
-    @DeleteMapping("/good/{boardId}/{userId}")
+    @DeleteMapping("/good/{articleId}/{userId}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("userId") String userId, @PathVariable("boardId") Long boardId){
         goodService.delete(userId, boardId);
         return ResponseEntity.ok()
