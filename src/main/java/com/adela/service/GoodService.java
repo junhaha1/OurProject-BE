@@ -4,9 +4,9 @@ import com.adela.domain.Article;
 import com.adela.domain.ArticleGood;
 import com.adela.domain.ArticleGoodId;
 import com.adela.domain.UserEntity;
-import com.adela.dto.AddGoodRequest;
+import com.adela.dto.article.AddGoodRequest;
 import com.adela.repository.BoardRepository;
-import com.adela.repository.GoodRepository;
+import com.adela.repository.ArticleGoodRepository;
 import com.adela.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class GoodService {
-    private final GoodRepository goodRepository;
+    private final ArticleGoodRepository articleGoodRepository;
     private final UserRepository userRepository;  // userEntity 조회용
     private final BoardRepository articleRepository;  // Article 조회용
 
@@ -26,7 +26,7 @@ public class GoodService {
         Article board = articleRepository.findById(request.getBoardId())
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다: " + request.getBoardId()));
 
-        return goodRepository.save(request.toEntity(user, board));  // 변환된 엔티티로 저장
+        return articleGoodRepository.save(request.toEntity(user, board));  // 변환된 엔티티로 저장
     }
 
     public void delete(String userId, Long boardId) {
@@ -39,6 +39,6 @@ public class GoodService {
         ArticleGoodId id = new ArticleGoodId();
         id.setUserId(user);
         id.setBoardId(board);
-        goodRepository.deleteById(id);
+        articleGoodRepository.deleteById(id);
     }
 }

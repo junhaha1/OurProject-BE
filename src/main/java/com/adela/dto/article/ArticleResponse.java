@@ -1,7 +1,6 @@
-package com.adela.dto;
+package com.adela.dto.article;
 
 import com.adela.domain.Article;
-import com.adela.domain.UserEntity;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -9,25 +8,28 @@ import java.time.LocalDate;
 @Getter
 public class ArticleResponse {
     private final Long boardId;
-    private final Long categoryId;
     private final String userId;
     private final String title;
+    private final int ctId;
     private final String content;
     private final String codeContent;
     private final String errorContent;
     private final LocalDate regDate;
     private final LocalDate updateDate;
 
-    public ArticleResponse(Article article){
+    private final int likeCount;
+
+    public ArticleResponse(Article article, int likeCount) {
         this.boardId = article.getBoardId();
-        this.categoryId = article.getCategoryId();
         this.userId = article.getUserEntity().getUserId();
         this.title = article.getTitle();
+        this.ctId = article.getCtId();
         this.content = article.getContent();
         this.codeContent = article.getCodeContent();
         this.errorContent = article.getErrorContent();
         this.regDate = article.getRegDate();
         this.updateDate = article.getUpdateDate();
 
+        this.likeCount = likeCount;
     }
 }

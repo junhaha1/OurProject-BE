@@ -1,8 +1,8 @@
 package com.adela.service;
 
 import com.adela.domain.UserEntity;
-import com.adela.dto.AddUserRequest;
-import com.adela.dto.UpdateUserRequest;
+import com.adela.dto.user.AddUserRequest;
+import com.adela.dto.user.UpdateUserRequest;
 import com.adela.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -2,8 +2,14 @@ package com.adela.controller;
 
 import com.adela.domain.Article;
 import com.adela.domain.BoardComment;
-import com.adela.dto.*;
+import com.adela.domain.UserEntity;
+import com.adela.dto.article.AddArticleRequest;
+import com.adela.dto.article.UpdateArticleRequest;
+import com.adela.dto.comment.AddCommnetRequest;
+import com.adela.dto.comment.CommentResponse;
+import com.adela.dto.comment.UpdateCommentRequest;
 import com.adela.service.BoardService;
+import com.adela.service.CommentGoodService;
 import com.adela.service.CommentService;
 import com.adela.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.adela.dto.ArticleResponse;
-import com.adela.service.BoardService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import com.adela.dto.article.ArticleResponse;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,12 +28,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/board")
 public class BoardApiController {
     private final BoardService boardService;
     private final CommentService commentService;
     private final UserService userService;
+    private final CommentGoodService commentGoodService;
 
-    @PostMapping("/board/article/{userId}")
+    @PostMapping("/article/{userId}")
     public ResponseEntity<Article> addArticle(@PathVariable String userId, @RequestBody AddArticleRequest request) {
         request.connectionUserEntity(userService.findById(userId));
         Article savedArticle = boardService.save(request);
@@ -39,25 +44,25 @@ public class BoardApiController {
                 .body(savedArticle);
     }
 
-    @GetMapping("/board/list")
+    @GetMapping("/article/list")
     public ResponseEntity<List<ArticleResponse>> findAllArticles() {
         List<ArticleResponse> articles = boardService.findAll()
                 .stream()
-                .map(ArticleResponse::new)
+                .map(article -> new ArticleResponse(article, boardService.getLikeCount(article)))
                 .toList();
+
         return ResponseEntity.ok().body(articles);
     }
 
-    @GetMapping("/board/list/{articleId}")
+
+    @GetMapping("/article/list/{articleId}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable("articleId") long id){
         Article article = boardService.findById(id);
-        //count = 서비스 이용해서 게시글 좋아요 갯수 계산
-        //viewArticle.set(count)
-        return ResponseEntity.ok()
-                .body(new ArticleResponse(article));
+        int likeCount = boardService.getLikeCount(article);
+        return ResponseEntity.ok().body(new ArticleResponse(article, likeCount));
     }
 
-    @DeleteMapping("/board/article/{articleId}")
+    @DeleteMapping("/article/{articleId}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("articleId") long id){
         boardService.delete(id);
 
@@ -65,7 +70,7 @@ public class BoardApiController {
                 .build();
     }
 
-    @PutMapping("/board/article/{articleId}")
+    @PutMapping("/article/{articleId}")
     public ResponseEntity<Article> updateArticle(@PathVariable("articleId") long id, @RequestBody UpdateArticleRequest request){
         Article updateArticle = boardService.update(id, request);
 
@@ -75,9 +80,14 @@ public class BoardApiController {
 
     //댓글 기능
     //댓글 추가
-    @PostMapping("/board/comment/{articleId}")
-    public ResponseEntity<BoardComment> addComment(@PathVariable("articleId") long id, @RequestBody AddCommnetRequest request) {
-        request.connectionArticle(boardService.findById(id));
+    @PostMapping("/comment/{articleId}/{userId}")
+    public ResponseEntity<BoardComment> addComment(@PathVariable Long articleId, @PathVariable String userId, @RequestBody AddCommnetRequest request) {
+        request.connectionArticle(boardService.findById(articleId));
+        UserEntity user = userService.findById(userId);
+        if (user == null) {
+            throw new RuntimeException("유저가 존재하지 않음: " + userId);
+        }
+        request.connectionUserEntity(user);
         BoardComment savedComment = commentService.save(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -85,7 +95,7 @@ public class BoardApiController {
     }
 
     //댓글 삭제
-    @DeleteMapping("/board/comment/{commentId}")
+    @DeleteMapping("/comment/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable("commentId") long comment_id){
         commentService.delete(comment_id);
         return ResponseEntity.ok()
@@ -93,17 +103,17 @@ public class BoardApiController {
     }
 
     //댓글 조회
-    @GetMapping("/board/comment/list/{boardId}")
+    @GetMapping("/comment/list/{boardId}")
     public ResponseEntity<List<CommentResponse>> findByBoardIdComments(@PathVariable("boardId") long boardId) {
         List<CommentResponse> comments = commentService.findByBoardId(boardId)
                 .stream()
-                .map(CommentResponse::new)
+                .map(comment -> new CommentResponse(comment, commentGoodService.goodCount(comment.getCommentId())))
                 .toList();
         return ResponseEntity.ok().body(comments);
     }
 
     //댓글 수정
-    @PutMapping("/board/comment/{commentId}")
+    @PutMapping("/comment/{commentId}")
     public ResponseEntity<String> updateArticle(@PathVariable("commentId") long id, @RequestBody UpdateCommentRequest request){
         BoardComment updateBoardComment = commentService.update(id, request);
 

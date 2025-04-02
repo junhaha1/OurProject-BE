@@ -1,7 +1,6 @@
-package com.adela.dto;
+package com.adela.dto.comment;
 
 import com.adela.domain.BoardComment;
-import jakarta.persistence.Column;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -13,12 +12,15 @@ public class CommentResponse {
     private String codeComment;
     private LocalDate regDate;
     private LocalDate updateDate;
+    private int goodcount;
 
-    public CommentResponse(BoardComment comment) {
+    public CommentResponse(BoardComment comment, int goodcount) {
         this.commentId = comment.getCommentId();
         this.comment = comment.getComment();
         this.codeComment = comment.getCodeComment();
         this.regDate = comment.getRegDate();
         this.updateDate = comment.getUpdateDate();
+
+        this.goodcount = goodcount;
     }
 }
