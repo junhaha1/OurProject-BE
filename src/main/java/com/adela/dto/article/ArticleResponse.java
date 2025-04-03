@@ -17,7 +17,9 @@ public class ArticleResponse {
     private final LocalDate regDate;
     private final LocalDate updateDate;
 
-    public ArticleResponse(Article article){
+    private final int likeCount;
+
+    public ArticleResponse(Article article, int likeCount) {
         this.boardId = article.getBoardId();
         this.userId = article.getUserEntity().getUserId();
         this.title = article.getTitle();
@@ -28,5 +30,6 @@ public class ArticleResponse {
         this.regDate = article.getRegDate();
         this.updateDate = article.getUpdateDate();
 
+        this.likeCount = likeCount;
     }
 }

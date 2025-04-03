@@ -9,6 +9,7 @@ import com.adela.dto.comment.AddCommnetRequest;
 import com.adela.dto.comment.CommentResponse;
 import com.adela.dto.comment.UpdateCommentRequest;
 import com.adela.service.BoardService;
+import com.adela.service.CommentGoodService;
 import com.adela.service.CommentService;
 import com.adela.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class BoardApiController {
     private final BoardService boardService;
     private final CommentService commentService;
     private final UserService userService;
+    private final CommentGoodService commentGoodService;
 
     @PostMapping("/article/{userId}")
     public ResponseEntity<Article> addArticle(@PathVariable String userId, @RequestBody AddArticleRequest request) {
@@ -46,18 +48,18 @@ public class BoardApiController {
     public ResponseEntity<List<ArticleResponse>> findAllArticles() {
         List<ArticleResponse> articles = boardService.findAll()
                 .stream()
-                .map(ArticleResponse::new)
+                .map(article -> new ArticleResponse(article, boardService.getLikeCount(article)))
                 .toList();
+
         return ResponseEntity.ok().body(articles);
     }
+
 
     @GetMapping("/article/list/{articleId}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable("articleId") long id){
         Article article = boardService.findById(id);
-        //count = 서비스 이용해서 게시글 좋아요 갯수 계산
-        //viewArticle.set(count)
-        return ResponseEntity.ok()
-                .body(new ArticleResponse(article));
+        int likeCount = boardService.getLikeCount(article);
+        return ResponseEntity.ok().body(new ArticleResponse(article, likeCount));
     }
 
     @DeleteMapping("/article/{articleId}")
@@ -101,11 +103,11 @@ public class BoardApiController {
     }
 
     //댓글 조회
-    @GetMapping("/comment/list/{boardId}")
+    @GetMapping("/comment/list/{articleId}")
     public ResponseEntity<List<CommentResponse>> findByBoardIdComments(@PathVariable("boardId") long boardId) {
         List<CommentResponse> comments = commentService.findByBoardId(boardId)
                 .stream()
-                .map(CommentResponse::new)
+                .map(comment -> new CommentResponse(comment, commentGoodService.goodCount(comment.getCommentId())))
                 .toList();
         return ResponseEntity.ok().body(comments);
     }
