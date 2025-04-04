@@ -104,7 +104,7 @@ public class BoardApiController {
 
     //댓글 조회
     @GetMapping("/comment/list/{articleId}")
-    public ResponseEntity<List<CommentResponse>> findByBoardIdComments(@PathVariable("boardId") long boardId) {
+    public ResponseEntity<List<CommentResponse>> findByBoardIdComments(@PathVariable("articleId") long boardId) {
         List<CommentResponse> comments = commentService.findByBoardId(boardId)
                 .stream()
                 .map(comment -> new CommentResponse(comment, commentGoodService.goodCount(comment.getCommentId())))
