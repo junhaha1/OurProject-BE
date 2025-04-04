@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class CommentResponse {
     private Long commentId;
     private String comment;
+    private String userId;
     private String codeComment;
     private LocalDate regDate;
     private LocalDate updateDate;
@@ -17,6 +18,7 @@ public class CommentResponse {
     public CommentResponse(BoardComment comment, int goodcount) {
         this.commentId = comment.getCommentId();
         this.comment = comment.getComment();
+        this.userId = comment.getUserEntity().getUserId();
         this.codeComment = comment.getCodeComment();
         this.regDate = comment.getRegDate();
         this.updateDate = comment.getUpdateDate();
