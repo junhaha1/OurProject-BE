@@ -5,6 +5,7 @@ import com.adela.domain.ArticleGood;
 import com.adela.domain.ArticleGoodId;
 import com.adela.domain.UserEntity;
 import com.adela.dto.article.AddGoodRequest;
+import com.adela.dto.article.ArticleGoodResponse;
 import com.adela.repository.BoardRepository;
 import com.adela.repository.ArticleGoodRepository;
 import com.adela.repository.UserRepository;
@@ -27,6 +28,20 @@ public class GoodService {
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다: " + request.getBoardId()));
 
         return articleGoodRepository.save(request.toEntity(user, board));  // 변환된 엔티티로 저장
+    }
+
+    public ArticleGoodResponse checkUserLiked(String userId, Long boardId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        Article article = articleRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        boolean exists = articleGoodRepository.existsByUserIdAndBoardId(user, article);
+        return new ArticleGoodResponse(userId, boardId, exists);
+    }
+
+    public ArticleGood findById(ArticleGoodId id) {
+        return articleGoodRepository.findById(id).orElse(null);
     }
 
     public void delete(String userId, Long boardId) {

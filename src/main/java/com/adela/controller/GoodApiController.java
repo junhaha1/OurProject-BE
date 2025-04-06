@@ -1,7 +1,10 @@
 package com.adela.controller;
 
+import com.adela.domain.Article;
 import com.adela.domain.ArticleGood;
 import com.adela.dto.article.AddGoodRequest;
+import com.adela.dto.article.ArticleGoodResponse;
+import com.adela.dto.article.ArticleResponse;
 import com.adela.service.GoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,15 @@ public class GoodApiController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticleGood);
     }
+
+    @GetMapping("/good/{userId}/{boardId}")
+    public ResponseEntity<ArticleGoodResponse> checkUserLiked(
+            @PathVariable("userId") String userId,
+            @PathVariable("boardId") Long boardId) {
+        ArticleGoodResponse response = goodService.checkUserLiked(userId, boardId);
+        return ResponseEntity.ok(response);
+    }
+
 
     @DeleteMapping("/good/{articleId}/{userId}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("userId") String userId, @PathVariable("boardId") Long boardId){
