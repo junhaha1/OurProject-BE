@@ -14,6 +14,18 @@ import org.springframework.web.bind.annotation.*;
 public class GoodApiController {
     private final GoodService goodService;
 
+    @GetMapping("/good/{articleId}")
+    public ResponseEntity<Integer> countGood(@PathVariable Long articleId){
+        int count = goodService.countGood(articleId);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/good/{articleId}/{userId}")
+    public ResponseEntity<Boolean> searchGood(@PathVariable Long articleId, @PathVariable String userId){
+        boolean exists = goodService.searchGood(articleId, userId);
+        return ResponseEntity.ok(exists);
+    }
+
     @PostMapping("/good")
     public ResponseEntity<ArticleGood> addGood(@RequestBody AddGoodRequest request){
         ArticleGood savedArticleGood = goodService.save(request);
@@ -22,7 +34,7 @@ public class GoodApiController {
     }
 
     @DeleteMapping("/good/{articleId}/{userId}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable("userId") String userId, @PathVariable("boardId") Long boardId){
+    public ResponseEntity<Void> deleteArticle(@PathVariable("articleId") Long boardId, @PathVariable("userId") String userId){
         goodService.delete(userId, boardId);
         return ResponseEntity.ok()
                 .build();
