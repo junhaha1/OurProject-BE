@@ -19,6 +19,16 @@ public class GoodService {
     private final UserRepository userRepository;  // userEntity 조회용
     private final BoardRepository articleRepository;  // Article 조회용
 
+    public boolean searchGood(Long boardId, String userId){
+        return articleGoodRepository.existsByBoardIdAndUserId(boardId, userId);
+    }
+
+    public int countGood(Long boardId){
+        Article board = articleRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다: " + boardId));
+        return articleGoodRepository.countByBoardId(board);
+    }
+
     public ArticleGood save(AddGoodRequest request) {
         UserEntity user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + request.getUserId()));
