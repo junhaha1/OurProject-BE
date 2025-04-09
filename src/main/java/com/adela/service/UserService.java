@@ -6,20 +6,25 @@ import com.adela.dto.user.UpdateUserRequest;
 import com.adela.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //생성
     public UserEntity save(AddUserRequest request){
+        //비밀번호 인코딩
+        String enPwd = bCryptPasswordEncoder.encode(request.getPwd());
+        request.setPwd(enPwd);
         return userRepository.save(request.toEntity());
     }
     
     //회원정보 조회 (본인정보)
-    public UserEntity findById (String userId){
+    public UserEntity findById (String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + userId));
     }
