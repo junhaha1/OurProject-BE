@@ -10,3 +10,7 @@ spring:
     username: test
     password : 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  issuer: adela@gmail.com
+  secret_key: project-springboot
