@@ -6,6 +6,7 @@ import com.adela.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +24,7 @@ public class WebTokenSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -30,6 +32,7 @@ public class WebTokenSecurityConfig {
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(new AntPathRequestMatcher("/api/token")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/board/article/list")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/board/user/**")).permitAll() //로그인/회원가입 경로 추가
                         .requestMatchers(new AntPathRequestMatcher("/board/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/comment/**")).authenticated()
                 )

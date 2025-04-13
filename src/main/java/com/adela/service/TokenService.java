@@ -17,17 +17,8 @@ public class TokenService {
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
 
-    public List<String> createTokens(String userId){
-        UserEntity user = userService.findById(userId);
-        List<String> tokens = new ArrayList<String>();
-
-        tokens.add(tokenProvider.generateToken(user, Duration.ofHours(2))); //accessToken
-        String refreshToken = tokenProvider.generateToken(user, Duration.ofHours(24));
-        tokens.add(refreshToken); //refreshToken
-
-        refreshTokenService.saveRefreshToken(user.getUserId(), refreshToken);
-
-        return tokens;
+    public String createToken(UserEntity user, int Uour){
+        return tokenProvider.generateToken(user, Duration.ofHours(Uour));
     }
 
     //access토큰이 만료됐을 경우 리프레시 토큰을 통해 사용자가 맞는지 확인 후에 재발급

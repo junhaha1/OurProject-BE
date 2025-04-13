@@ -27,13 +27,12 @@ public class TokenApiController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new CreateAccessTokenResponse(newAccessToken));
     }
-    
-    
+
     //테스트 코드
-    @PostMapping("/token/create")
-    public ResponseEntity<List<String>> createUserToken(@RequestBody UpdateUserRequest request){
-        List<String> tokens = tokenService.createTokens(request.getName());
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(tokens);
-    }
+//    @PostMapping("/token/create")
+//    public ResponseEntity<List<String>> createUserToken(@RequestBody UpdateUserRequest request){
+//        List<String> tokens = tokenService.createTokens(request.getName());
+//        return ResponseEntity.status(HttpStatus.CREATED)
+//                .body(tokens);
+//    }
 }

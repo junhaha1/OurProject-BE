@@ -2,7 +2,10 @@ package com.adela.service;
 
 import com.adela.domain.UserEntity;
 import com.adela.dto.user.AddUserRequest;
+import com.adela.dto.user.LoginUserResponse;
 import com.adela.dto.user.UpdateUserRequest;
+import com.adela.exception.InvalidPasswordException;
+import com.adela.exception.UserNotFoundException;
 import com.adela.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,19 @@ public class UserService {
         String enPwd = bCryptPasswordEncoder.encode(request.getPwd());
         request.setPwd(enPwd);
         return userRepository.save(request.toEntity());
+    }
+
+    //로그인 기능
+    public UserEntity login(String userId, String pwd){
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Not Found"));
+//        if (!pwd.equals(user.getPassword())){ //테스트 코드 => 패스워드가 인코딩되지 않은 기존 유저들로 테스트 하는 용도로 추가
+//            throw new InvalidPasswordException("Wrong password");
+//        }
+        if (!bCryptPasswordEncoder.matches(pwd, user.getPassword())) {
+            throw new InvalidPasswordException("Wrong password");
+        }
+        return user;
     }
     
     //회원정보 조회 (본인정보)
